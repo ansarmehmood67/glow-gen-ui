@@ -3,9 +3,9 @@ import React from 'react';
 
 const HeroSection = () => {
   return (
-    <div className="text-center space-y-8 mb-16">
+    <div className="text-center space-y-6 mb-12">
       <div className="space-y-4">
-        <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-purple-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-float">
+        <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-float">
           AI Website
         </h1>
         <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-purple-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-float">
