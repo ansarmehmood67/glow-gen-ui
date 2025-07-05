@@ -71,44 +71,43 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-purple-950/20">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-cyan-900/20 relative overflow-hidden">
       <Navbar />
       
-      {/* Background decoration */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-600/5 rounded-full blur-3xl"></div>
-      </div>
-
+      {/* Main content */}
       <div className="relative z-10">
-        {/* Hero Section */}
-        <div className="container mx-auto px-4 pt-24 pb-12">
-          <HeroSection />
+        {/* Hero Section - Full viewport height */}
+        <HeroSection />
+        
+        {/* Generation Interface */}
+        <div className="relative">
+          {!isLoading && !generatedHtml && (
+            <PromptInput onGenerate={handleGenerate} isLoading={isLoading} />
+          )}
           
-          <div className="space-y-12">
-            {!isLoading && !generatedHtml && (
-              <PromptInput onGenerate={handleGenerate} isLoading={isLoading} />
-            )}
-            
-            {isLoading && <LoadingAnimation />}
-            
-            {generatedHtml && !isLoading && (
+          {isLoading && (
+            <div className="min-h-screen flex items-center justify-center">
+              <LoadingAnimation />
+            </div>
+          )}
+          
+          {generatedHtml && !isLoading && (
+            <div className="py-12">
               <WebsitePreview 
                 htmlContent={generatedHtml} 
                 onRegenerate={handleRegenerate}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Additional Sections - only show when not in generation mode */}
         {!isLoading && !generatedHtml && (
-          <>
+          <div className="space-y-0">
             <FeaturesSection />
             <StatsSection />
             <CTASection />
-          </>
+          </div>
         )}
       </div>
     </div>
