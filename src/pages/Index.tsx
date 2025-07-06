@@ -22,7 +22,7 @@ const Index = () => {
     try {
       console.log('Sending request to backend with prompt:', prompt);
       
-      const response = await fetch('https://ca4b-223-123-6-211.ngrok-free.app/generate', {
+      const response = await fetch('https://3e07-223-123-6-211.ngrok-free.app/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
