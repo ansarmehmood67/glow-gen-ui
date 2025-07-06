@@ -41,24 +41,18 @@ const Index = () => {
       const data = await response.json();
       console.log('Response data:', data);
 
-      if (data.html) {
-        // Generate a unique project ID
-        const projectId = 'project_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        
-        // Store the HTML content temporarily
-        sessionStorage.setItem(`project-${projectId}`, data.html);
-        
+      if (data.id) {
         toast({
           title: "Website Generated Successfully! 🎉",
           description: "Redirecting to your project editor...",
         });
 
-        // Redirect to the project page
+        // Redirect to the project page with the returned ID
         setTimeout(() => {
-          navigate(`/project/${projectId}`);
+          navigate(`/project/${data.id}`);
         }, 1000);
       } else {
-        throw new Error('No HTML content received from the server');
+        throw new Error('No project ID received from the server');
       }
     } catch (error) {
       console.error('Error generating website:', error);
