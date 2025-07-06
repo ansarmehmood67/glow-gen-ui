@@ -68,7 +68,7 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center px-4 py-32">
       <div className="w-full max-w-4xl mx-auto text-center space-y-8">
         {/* Hero heading */}
         <div className="space-y-4">
