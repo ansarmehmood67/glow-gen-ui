@@ -1,12 +1,25 @@
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Menu, Home, CreditCard, Settings, LogOut } from 'lucide-react';
 import ChatArea from '@/components/ChatArea';
 import LivePreview from '@/components/LivePreview';
 import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
 
 const Project = () => {
   const { projectId } = useParams<{ projectId: string }>();
+  const navigate = useNavigate();
   const [htmlContent, setHtmlContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [chatHistory, setChatHistory] = useState<Array<{ role: 'user' | 'assistant', content: string }>>([]);
@@ -73,7 +86,70 @@ const Project = () => {
   };
 
   return (
-    <div className="h-screen flex bg-background overflow-hidden">
+    <div className="h-screen flex bg-background overflow-hidden relative">
+      {/* Hamburger Menu */}
+      <div className="absolute top-4 left-4 z-50">
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button variant="outline" size="icon" className="bg-background/90 backdrop-blur-sm">
+              <Menu className="h-4 w-4" />
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Project Menu</DrawerTitle>
+              <DrawerDescription>
+                Navigate to different sections of Olytiq
+              </DrawerDescription>
+            </DrawerHeader>
+            <div className="px-4 pb-4 space-y-2">
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start" 
+                onClick={() => navigate('/')}
+              >
+                <Home className="mr-2 h-4 w-4" />
+                Dashboard
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start"
+                onClick={() => {
+                  toast({
+                    title: "Credits",
+                    description: "You have 25 credits remaining",
+                  });
+                }}
+              >
+                <CreditCard className="mr-2 h-4 w-4" />
+                Credits (25 remaining)
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start"
+                onClick={() => navigate('/profile')}
+              >
+                <Settings className="mr-2 h-4 w-4" />
+                Settings
+              </Button>
+            </div>
+            <DrawerFooter>
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => navigate('/login')}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign Out
+              </Button>
+              <DrawerClose asChild>
+                <Button variant="outline">Close</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      </div>
+
       {/* Left Side - Chat Area */}
       <div className="w-1/2 border-r border-border">
         <ChatArea 
