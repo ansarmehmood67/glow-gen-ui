@@ -22,7 +22,7 @@ const Index = () => {
     try {
       console.log('Sending request to backend with prompt:', prompt);
       
-      const response = await fetch('https://d62c-223-123-6-211.ngrok-free.app/generate', {
+      const response = await fetch('https://84c8-2402-ad80-13d-2a53-bc68-bc3b-b29b-f1e6.ngrok-free.app/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,18 +41,24 @@ const Index = () => {
       const data = await response.json();
       console.log('Response data:', data);
 
-      if (data.id) {
+      if (data.html) {
+        // Generate a unique project ID
+        const projectId = 'project_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
+        // Store the HTML content temporarily
+        sessionStorage.setItem(`project-${projectId}`, data.html);
+        
         toast({
           title: "Website Generated Successfully! 🎉",
           description: "Redirecting to your project editor...",
         });
 
-        // Redirect to the project page with the returned ID
+        // Redirect to the project page
         setTimeout(() => {
-          navigate(`/project/${data.id}`);
+          navigate(`/project/${projectId}`);
         }, 1000);
       } else {
-        throw new Error('No project ID received from the server');
+        throw new Error('No HTML content received from the server');
       }
     } catch (error) {
       console.error('Error generating website:', error);
