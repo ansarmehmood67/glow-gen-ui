@@ -4,9 +4,6 @@ import Navbar from '@/components/Navbar';
 import PromptInput from '@/components/PromptInput';
 import LoadingAnimation from '@/components/LoadingAnimation';
 import WebsitePreview from '@/components/WebsitePreview';
-import FeaturesSection from '@/components/FeaturesSection';
-import StatsSection from '@/components/StatsSection';
-import CTASection from '@/components/CTASection';
 import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
@@ -70,39 +67,27 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-cyan-900/20 relative overflow-hidden">
+    <div className="min-h-screen relative">
       <Navbar />
       
       {/* Main content */}
-      <div className="relative z-10">
-        {/* Generation Interface */}
-        <div className="relative">
-          {!isLoading && !generatedHtml && (
-            <PromptInput onGenerate={handleGenerate} isLoading={isLoading} />
-          )}
-          
-          {isLoading && (
-            <div className="min-h-screen flex items-center justify-center">
-              <LoadingAnimation />
-            </div>
-          )}
-          
-          {generatedHtml && !isLoading && (
-            <div className="py-12">
-              <WebsitePreview 
-                htmlContent={generatedHtml} 
-                onRegenerate={handleRegenerate}
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Additional Sections - only show when not in generation mode */}
+      <div className="relative">
         {!isLoading && !generatedHtml && (
-          <div className="space-y-0">
-            <FeaturesSection />
-            <StatsSection />
-            <CTASection />
+          <PromptInput onGenerate={handleGenerate} isLoading={isLoading} />
+        )}
+        
+        {isLoading && (
+          <div className="min-h-screen flex items-center justify-center">
+            <LoadingAnimation />
+          </div>
+        )}
+        
+        {generatedHtml && !isLoading && (
+          <div className="py-12">
+            <WebsitePreview 
+              htmlContent={generatedHtml} 
+              onRegenerate={handleRegenerate}
+            />
           </div>
         )}
       </div>
