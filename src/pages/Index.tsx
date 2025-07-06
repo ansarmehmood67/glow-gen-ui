@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import HeroSection from '@/components/HeroSection';
 import PromptInput from '@/components/PromptInput';
 import LoadingAnimation from '@/components/LoadingAnimation';
 import WebsitePreview from '@/components/WebsitePreview';
@@ -76,9 +75,6 @@ const Index = () => {
       
       {/* Main content */}
       <div className="relative z-10">
-        {/* Hero Section - Full viewport height */}
-        <HeroSection />
-        
         {/* Generation Interface */}
         <div className="relative">
           {!isLoading && !generatedHtml && (
