@@ -1,25 +1,23 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import PromptInput from '@/components/PromptInput';
 import LoadingAnimation from '@/components/LoadingAnimation';
-import WebsitePreview from '@/components/WebsitePreview';
 import RecentDesigns from '@/components/RecentDesigns';
 import CommunitySection from '@/components/CommunitySection';
 import CTASection from '@/components/CTASection';
+import PlatformInfo from '@/components/PlatformInfo';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedHtml, setGeneratedHtml] = useState<string>('');
-  const [currentPrompt, setCurrentPrompt] = useState<string>('');
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleGenerate = async (prompt: string) => {
     setIsLoading(true);
-    setCurrentPrompt(prompt);
-    setGeneratedHtml('');
 
     try {
       console.log('Sending request to backend with prompt:', prompt);
@@ -44,11 +42,21 @@ const Index = () => {
       console.log('Response data:', data);
 
       if (data.html) {
-        setGeneratedHtml(data.html);
+        // Generate a unique project ID
+        const projectId = 'project_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
+        // Store the HTML content temporarily
+        sessionStorage.setItem(`project-${projectId}`, data.html);
+        
         toast({
           title: "Website Generated Successfully! 🎉",
-          description: "Your AI-powered website is ready for preview.",
+          description: "Redirecting to your project editor...",
         });
+
+        // Redirect to the project page
+        setTimeout(() => {
+          navigate(`/project/${projectId}`);
+        }, 1000);
       } else {
         throw new Error('No HTML content received from the server');
       }
@@ -59,14 +67,7 @@ const Index = () => {
         description: "There was an error generating your website. Please try again.",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleRegenerate = () => {
-    if (currentPrompt) {
-      handleGenerate(currentPrompt);
     }
   };
 
@@ -76,12 +77,13 @@ const Index = () => {
       
       {/* Main content */}
       <div className="relative">
-        {!isLoading && !generatedHtml && (
+        {!isLoading && (
           <>
             <PromptInput onGenerate={handleGenerate} isLoading={isLoading} />
             <RecentDesigns />
             <CommunitySection />
             <CTASection />
+            <PlatformInfo />
           </>
         )}
         
@@ -90,20 +92,9 @@ const Index = () => {
             <LoadingAnimation />
           </div>
         )}
-        
-        {generatedHtml && !isLoading && (
-          <div className="py-20 px-4">
-            <div className="container mx-auto">
-              <WebsitePreview 
-                htmlContent={generatedHtml} 
-                onRegenerate={handleRegenerate}
-              />
-            </div>
-          </div>
-        )}
       </div>
 
-      {!isLoading && !generatedHtml && <Footer />}
+      {!isLoading && <Footer />}
     </div>
   );
 };
