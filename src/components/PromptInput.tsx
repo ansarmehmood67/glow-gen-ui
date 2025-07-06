@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Sparkles, Zap, ArrowRight, Magic, Code, Palette } from 'lucide-react';
+import { Sparkles, Zap, ArrowRight, Code, Palette } from 'lucide-react';
 
 interface PromptInputProps {
   onGenerate: (prompt: string) => void;
@@ -36,7 +35,7 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
       description: "Design a restaurant website with menu and contact information"
     },
     {
-      icon: <Magic className="w-5 h-5" />,
+      icon: <Sparkles className="w-5 h-5" />,
       title: "Blog Platform",
       description: "Make a blog website with clean typography and sidebar"
     }
