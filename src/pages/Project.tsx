@@ -1,21 +1,17 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Menu, Home, CreditCard, Settings, LogOut } from 'lucide-react';
+import { Menu, Home, Plus, CreditCard, HelpCircle } from 'lucide-react';
 import ChatArea from '@/components/ChatArea';
 import LivePreview from '@/components/LivePreview';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const Project = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -89,65 +85,48 @@ const Project = () => {
     <div className="h-screen flex bg-background overflow-hidden relative">
       {/* Hamburger Menu */}
       <div className="absolute top-4 left-4 z-50">
-        <Drawer>
-          <DrawerTrigger asChild>
-            <Button variant="outline" size="icon" className="bg-background/90 backdrop-blur-sm">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon" className="bg-background/90 backdrop-blur-sm border-border/50">
               <Menu className="h-4 w-4" />
             </Button>
-          </DrawerTrigger>
-          <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>Project Menu</DrawerTitle>
-              <DrawerDescription>
-                Navigate to different sections of Olytiq
-              </DrawerDescription>
-            </DrawerHeader>
-            <div className="px-4 pb-4 space-y-2">
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start" 
-                onClick={() => navigate('/')}
-              >
-                <Home className="mr-2 h-4 w-4" />
-                Dashboard
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start"
-                onClick={() => {
-                  toast({
-                    title: "Credits",
-                    description: "You have 25 credits remaining",
-                  });
-                }}
-              >
-                <CreditCard className="mr-2 h-4 w-4" />
-                Credits (25 remaining)
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start"
-                onClick={() => navigate('/profile')}
-              >
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </Button>
-            </div>
-            <DrawerFooter>
-              <Button 
-                variant="outline" 
-                className="w-full"
-                onClick={() => navigate('/login')}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                Sign Out
-              </Button>
-              <DrawerClose asChild>
-                <Button variant="outline">Close</Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-56 bg-background border-border">
+            <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer">
+              <Home className="mr-3 h-4 w-4" />
+              Go to Dashboard
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer">
+              <Plus className="mr-3 h-4 w-4" />
+              Create New Project
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              onClick={() => {
+                toast({
+                  title: "Credits",
+                  description: "You have 25 credits remaining",
+                });
+              }}
+              className="cursor-pointer"
+            >
+              <CreditCard className="mr-3 h-4 w-4" />
+              Credits (25 left)
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => {
+                toast({
+                  title: "Help",
+                  description: "Visit our documentation for assistance",
+                });
+              }}
+              className="cursor-pointer"
+            >
+              <HelpCircle className="mr-3 h-4 w-4" />
+              Help
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Left Side - Chat Area */}
