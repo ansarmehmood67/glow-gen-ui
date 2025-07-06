@@ -4,7 +4,9 @@ import Navbar from '@/components/Navbar';
 import PromptInput from '@/components/PromptInput';
 import LoadingAnimation from '@/components/LoadingAnimation';
 import WebsitePreview from '@/components/WebsitePreview';
-import PlatformInfo from '@/components/PlatformInfo';
+import RecentDesigns from '@/components/RecentDesigns';
+import CommunitySection from '@/components/CommunitySection';
+import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 
@@ -69,7 +71,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen relative bg-background">
+    <div className="min-h-screen relative">
       <Navbar />
       
       {/* Main content */}
@@ -77,7 +79,9 @@ const Index = () => {
         {!isLoading && !generatedHtml && (
           <>
             <PromptInput onGenerate={handleGenerate} isLoading={isLoading} />
-            <PlatformInfo />
+            <RecentDesigns />
+            <CommunitySection />
+            <CTASection />
           </>
         )}
         
@@ -88,11 +92,13 @@ const Index = () => {
         )}
         
         {generatedHtml && !isLoading && (
-          <div className="py-12">
-            <WebsitePreview 
-              htmlContent={generatedHtml} 
-              onRegenerate={handleRegenerate}
-            />
+          <div className="py-20 px-4">
+            <div className="container mx-auto">
+              <WebsitePreview 
+                htmlContent={generatedHtml} 
+                onRegenerate={handleRegenerate}
+              />
+            </div>
           </div>
         )}
       </div>

@@ -1,59 +1,63 @@
 
 import React from 'react';
-import { Code, Palette, Smartphone, Zap } from 'lucide-react';
+import { Code, Palette, Smartphone, Zap, Sparkles } from 'lucide-react';
 
 const LoadingAnimation = () => {
   const steps = [
-    { icon: Code, text: "Analyzing your prompt", delay: "0s" },
-    { icon: Palette, text: "Designing layout", delay: "0.5s" },
-    { icon: Smartphone, text: "Optimizing for mobile", delay: "1s" },
-    { icon: Zap, text: "Generating code", delay: "1.5s" }
+    { icon: Sparkles, text: "Analyzing your vision", delay: "0s" },
+    { icon: Code, text: "Generating structure", delay: "0.5s" },
+    { icon: Palette, text: "Crafting design", delay: "1s" },
+    { icon: Smartphone, text: "Optimizing experience", delay: "1.5s" }
   ];
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-8 bg-card border border-border rounded-2xl glow">
+    <div className="w-full max-w-2xl mx-auto p-8 premium-card rounded-3xl">
       <div className="text-center space-y-8">
+        {/* Main animation */}
         <div className="relative">
-          <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 animate-pulse-glow flex items-center justify-center">
-            <Zap className="w-8 h-8 text-white animate-pulse" />
+          <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-primary via-secondary to-accent flex items-center justify-center relative overflow-hidden">
+            <Zap className="w-10 h-10 text-white animate-pulse z-10" />
+            <div className="absolute inset-0 shimmer-loading rounded-full"></div>
           </div>
-          <div className="absolute inset-0 w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 animate-ping opacity-20"></div>
+          <div className="absolute inset-0 w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-primary via-secondary to-accent animate-ping opacity-20"></div>
         </div>
         
-        <h3 className="text-2xl font-bold text-glow">Creating Your Website</h3>
+        <div className="space-y-2">
+          <h3 className="text-2xl font-bold premium-gradient">AI Magic in Progress</h3>
+          <p className="text-muted-foreground">Creating your perfect website...</p>
+        </div>
         
+        {/* Progress steps */}
         <div className="space-y-4">
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
               <div 
                 key={index}
-                className="flex items-center space-x-4 p-4 bg-background/50 rounded-lg"
+                className="flex items-center space-x-4 p-4 bg-background/50 rounded-xl border border-border/50"
                 style={{ animationDelay: step.delay }}
               >
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 flex items-center justify-center animate-pulse">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center animate-pulse">
                   <Icon className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-lg text-muted-foreground">{step.text}</span>
-                <div className="flex-1">
-                  <div className="h-1 bg-border rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-purple-600 to-cyan-600 animate-pulse"
-                      style={{ 
-                        width: '100%',
-                        animation: `loading-bar 2s ease-in-out infinite ${step.delay}`
-                      }}
-                    ></div>
-                  </div>
+                <span className="text-lg text-foreground flex-1">{step.text}</span>
+                <div className="w-20 h-2 bg-border rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-primary to-secondary shimmer-loading rounded-full"
+                    style={{ 
+                      animationDelay: step.delay,
+                      animationDuration: '2s'
+                    }}
+                  ></div>
                 </div>
               </div>
             );
           })}
         </div>
         
-        <p className="text-sm text-muted-foreground">
-          This usually takes 10-30 seconds...
-        </p>
+        <div className="text-sm text-muted-foreground bg-primary/10 px-4 py-2 rounded-full inline-block">
+          ✨ Usually takes 10-30 seconds
+        </div>
       </div>
     </div>
   );

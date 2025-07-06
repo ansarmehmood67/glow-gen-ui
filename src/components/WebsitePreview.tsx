@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Download, Globe, RefreshCw } from 'lucide-react';
+import { Download, Globe, RefreshCw, ExternalLink } from 'lucide-react';
 
 interface WebsitePreviewProps {
   htmlContent: string;
@@ -27,30 +27,33 @@ const WebsitePreview = ({ htmlContent, onRegenerate }: WebsitePreviewProps) => {
   };
 
   return (
-    <div className="w-full space-y-6">
-      <div className="text-center space-y-2">
-        <h3 className="text-2xl font-bold text-glow">Your Website is Ready! ✨</h3>
-        <p className="text-muted-foreground">Preview your generated website below</p>
+    <div className="w-full space-y-8 entrance-animation">
+      <div className="text-center space-y-4">
+        <h3 className="text-3xl font-bold premium-gradient">Your Website is Ready! ✨</h3>
+        <p className="text-muted-foreground text-lg">Preview your AI-generated masterpiece below</p>
       </div>
       
       <div className="relative">
-        <div className="bg-card border-2 border-primary/50 rounded-2xl overflow-hidden glow-intense">
-          <div className="bg-background/50 px-4 py-3 border-b border-border flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+        <div className="magic-border rounded-3xl overflow-hidden">
+          <div className="bg-background/80 px-6 py-4 border-b border-border/50 flex items-center justify-between backdrop-blur-sm">
+            <div className="flex items-center space-x-3">
+              <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
             </div>
             <div className="text-sm text-muted-foreground flex items-center space-x-2">
-              <Globe className="w-4 h-4" />
-              <span>Generated Website Preview</span>
+              <Globe className="w-4 h-4 text-primary" />
+              <span>olytiq.ai/preview</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <ExternalLink className="w-4 h-4 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
             </div>
           </div>
           
-          <div className="relative">
+          <div className="relative bg-white">
             <iframe
               srcDoc={htmlContent}
-              className="w-full h-96 md:h-[600px] border-0"
+              className="w-full h-96 md:h-[700px] border-0"
               sandbox="allow-scripts allow-same-origin"
               title="Generated Website Preview"
             />
@@ -61,27 +64,27 @@ const WebsitePreview = ({ htmlContent, onRegenerate }: WebsitePreviewProps) => {
       <div className="flex flex-col md:flex-row gap-4 justify-center">
         <Button
           onClick={handleDownload}
-          className="flex-1 md:flex-none h-12 text-lg font-semibold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 transition-all duration-300 glow"
+          className="flex-1 md:flex-none h-14 text-lg font-semibold bg-gradient-to-r from-secondary to-primary hover:from-secondary/90 hover:to-primary/90 transition-all duration-300 group"
         >
-          <Download className="w-5 h-5 mr-3" />
+          <Download className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
           Download Code
         </Button>
         
         <Button
           onClick={handlePublish}
-          className="flex-1 md:flex-none h-12 text-lg font-semibold bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 transition-all duration-300 glow"
+          className="flex-1 md:flex-none h-14 text-lg font-semibold bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 transition-all duration-300 group"
         >
-          <Globe className="w-5 h-5 mr-3" />
-          Publish Online
+          <Globe className="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform" />
+          Publish Live
         </Button>
         
         <Button
           onClick={onRegenerate}
           variant="outline"
-          className="flex-1 md:flex-none h-12 text-lg font-semibold border-2 border-primary/50 hover:border-primary hover:bg-primary/10 transition-all duration-300"
+          className="flex-1 md:flex-none h-14 text-lg font-semibold border-2 border-primary/30 hover:border-primary hover:bg-primary/10 transition-all duration-300 group"
         >
-          <RefreshCw className="w-5 h-5 mr-3" />
-          Generate Again
+          <RefreshCw className="w-5 h-5 mr-3 group-hover:rotate-180 transition-transform duration-500" />
+          Regenerate
         </Button>
       </div>
     </div>

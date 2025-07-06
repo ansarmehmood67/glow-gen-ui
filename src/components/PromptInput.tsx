@@ -16,14 +16,11 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
   const [isTyping, setIsTyping] = useState(true);
 
   const changingWords = [
-    'portfolio website',
-    'ecommerce store',
-    'landing page',
-    'blog platform',
-    'dashboard app',
-    'social network',
-    'mobile app UI',
-    'web application'
+    'a portfolio website',
+    'an ecommerce store',
+    'a startup landing page',
+    'a personal blog',
+    'a SaaS dashboard'
   ];
 
   useEffect(() => {
@@ -41,7 +38,7 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
           // Wait 2 seconds then start typing out
           setTimeout(() => setIsTyping(false), 2000);
         }
-      }, 100);
+      }, 80);
       
       return () => clearInterval(typeInInterval);
     } else {
@@ -56,7 +53,7 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
           setCurrentWordIndex((prev) => (prev + 1) % changingWords.length);
           setIsTyping(true);
         }
-      }, 80);
+      }, 60);
       
       return () => clearInterval(typeOutInterval);
     }
@@ -82,26 +79,26 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
         {/* Main heading */}
         <div className="space-y-6">
           <h1 className="text-6xl md:text-8xl font-bold">
-            <span className="text-foreground">Build with </span>
-            <span className="brand-gradient flex items-center justify-center gap-4">
-              <Zap className="w-16 h-16 md:w-20 md:h-20 text-primary" />
-              olytiq
+            <span className="text-foreground">Make it. Mean it. </span>
+            <span className="premium-gradient flex items-center justify-center gap-4">
+              <Zap className="w-16 h-16 md:w-20 md:h-20 text-primary animate-float" />
+              Olytiq.
             </span>
           </h1>
-
-          {/* Animated subtitle */}
-          <div className="text-2xl md:text-3xl text-muted-foreground font-light">
-            <span>Ask olytiq to create a </span>
-            <span className="text-primary font-medium inline-block min-w-[200px] text-left">
-              {displayText}
-              <span className="typewriter"></span>
-            </span>
-          </div>
         </div>
 
-        {/* Input form */}
+        {/* Input form with typewriter animation */}
         <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
-          <div className="glow-card rounded-3xl p-8 backdrop-blur-sm">
+          <div className="premium-card rounded-3xl p-8 backdrop-blur-sm">
+            {/* Animated prompt text */}
+            <div className="text-xl md:text-2xl text-muted-foreground font-light mb-6">
+              <span>Ask Olytiq to create </span>
+              <span className="text-primary font-medium inline-block min-w-[250px] text-left">
+                {displayText}
+                <span className="typewriter"></span>
+              </span>
+            </div>
+            
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
