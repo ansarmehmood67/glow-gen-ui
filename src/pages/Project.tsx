@@ -41,6 +41,7 @@ const Project = () => {
 
         if (data.html) {
           setHtmlContent(data.html);
+          sessionStorage.setItem(`project-${projectId}`, data.html);
         }
       } catch (error) {
         console.error('Error loading project:', error);
