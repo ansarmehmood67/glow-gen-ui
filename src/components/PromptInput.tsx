@@ -12,25 +12,55 @@ interface PromptInputProps {
 const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
   const [prompt, setPrompt] = useState('');
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [isTyping, setIsTyping] = useState(true);
 
   const changingWords = [
-    'portfolio site',
+    'portfolio website',
     'ecommerce store',
     'landing page',
-    'blog website',
+    'blog platform',
     'dashboard app',
-    'social platform',
-    'mobile app',
+    'social network',
+    'mobile app UI',
     'web application'
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prev) => (prev + 1) % changingWords.length);
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
+    const currentWord = changingWords[currentWordIndex];
+    
+    if (isTyping) {
+      // Type in animation
+      let charIndex = 0;
+      const typeInInterval = setInterval(() => {
+        setDisplayText(currentWord.slice(0, charIndex + 1));
+        charIndex++;
+        
+        if (charIndex >= currentWord.length) {
+          clearInterval(typeInInterval);
+          // Wait 2 seconds then start typing out
+          setTimeout(() => setIsTyping(false), 2000);
+        }
+      }, 100);
+      
+      return () => clearInterval(typeInInterval);
+    } else {
+      // Type out animation
+      let charIndex = currentWord.length;
+      const typeOutInterval = setInterval(() => {
+        setDisplayText(currentWord.slice(0, charIndex - 1));
+        charIndex--;
+        
+        if (charIndex <= 0) {
+          clearInterval(typeOutInterval);
+          setCurrentWordIndex((prev) => (prev + 1) % changingWords.length);
+          setIsTyping(true);
+        }
+      }, 80);
+      
+      return () => clearInterval(typeOutInterval);
+    }
+  }, [currentWordIndex, isTyping, changingWords]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,70 +77,69 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 relative">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-background to-blue-900/20"></div>
-      
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto text-center">
+    <div className="min-h-screen flex items-center justify-center px-4 py-20">
+      <div className="w-full max-w-4xl mx-auto text-center space-y-12">
         {/* Main heading */}
-        <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-4">
-          Build something{' '}
-          <span className="inline-flex items-center bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            <Zap className="w-12 h-12 md:w-16 md:h-16 text-primary mx-2" />
-            amazing
-          </span>
-        </h1>
+        <div className="space-y-6">
+          <h1 className="text-6xl md:text-8xl font-bold">
+            <span className="text-foreground">Build with </span>
+            <span className="brand-gradient flex items-center justify-center gap-4">
+              <Zap className="w-16 h-16 md:w-20 md:h-20 text-primary" />
+              olytiq
+            </span>
+          </h1>
 
-        {/* Animated subtitle */}
-        <div className="text-xl md:text-2xl text-muted-foreground mb-12 font-light h-8">
-          <span>Ask olytiq to create a </span>
-          <span className="text-primary font-medium animate-text-change">
-            {changingWords[currentWordIndex]}
-          </span>
+          {/* Animated subtitle */}
+          <div className="text-2xl md:text-3xl text-muted-foreground font-light">
+            <span>Ask olytiq to create a </span>
+            <span className="text-primary font-medium inline-block min-w-[200px] text-left">
+              {displayText}
+              <span className="typewriter"></span>
+            </span>
+          </div>
         </div>
 
         {/* Input form */}
         <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
-          <div className="relative bg-card border border-border rounded-2xl p-6 shadow-2xl backdrop-blur-sm">
+          <div className="glow-card rounded-3xl p-8 backdrop-blur-sm">
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask olytiq to create a prototype..."
-              className="w-full bg-transparent border-none text-foreground placeholder:text-muted-foreground text-lg resize-none focus:ring-0 focus:outline-none min-h-[60px]"
+              placeholder="Describe your vision and watch it come to life..."
+              className="w-full bg-transparent border-none text-foreground placeholder:text-muted-foreground text-xl resize-none focus:ring-0 focus:outline-none min-h-[80px] leading-relaxed"
               disabled={isLoading}
             />
             
             {/* Bottom toolbar */}
-            <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
-              <div className="flex items-center space-x-4">
+            <div className="flex items-center justify-between mt-6 pt-6 border-t border-border">
+              <div className="flex items-center space-x-6">
                 <button
                   type="button"
-                  className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:scale-105"
                   disabled={isLoading}
                 >
-                  <div className="w-6 h-6 bg-muted rounded flex items-center justify-center">
-                    <span className="text-xs font-bold">+</span>
+                  <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center hover:bg-muted/80">
+                    <span className="text-sm font-bold">+</span>
                   </div>
                 </button>
                 
                 <button
                   type="button"
-                  className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-all duration-200"
                   disabled={isLoading}
                 >
                   <Paperclip className="w-5 h-5" />
-                  <span className="text-sm">Attach</span>
+                  <span className="text-sm font-medium">Attach</span>
                 </button>
                 
                 <button
                   type="button"
-                  className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-all duration-200"
                   disabled={isLoading}
                 >
                   <Globe className="w-5 h-5" />
-                  <span className="text-sm">Public</span>
+                  <span className="text-sm font-medium">Public</span>
                 </button>
               </div>
               
@@ -118,12 +147,12 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
                 type="submit"
                 disabled={!prompt.trim() || isLoading}
                 size="icon"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl w-10 h-10"
+                className="btn-primary text-primary-foreground rounded-2xl w-12 h-12 border-0"
               >
                 {isLoading ? (
-                  <div className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full"></div>
+                  <div className="animate-spin w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"></div>
                 ) : (
-                  <ArrowUp className="w-5 h-5" />
+                  <ArrowUp className="w-6 h-6" />
                 )}
               </Button>
             </div>

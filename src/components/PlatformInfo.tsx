@@ -7,45 +7,48 @@ const PlatformInfo = () => {
   const features = [
     {
       icon: Zap,
-      title: 'AI-Powered',
-      description: 'Advanced AI understands your requirements and generates clean, modern code instantly.'
+      title: 'AI-Powered Generation',
+      description: 'Advanced AI understands your requirements and generates clean, production-ready code instantly.'
     },
     {
       icon: Code,
-      title: 'Production Ready',
-      description: 'Generated code follows best practices and is ready for deployment without modifications.'
+      title: 'Modern Tech Stack',
+      description: 'Built with React, TypeScript, and Tailwind CSS. Code follows industry best practices.'
     },
     {
       icon: Palette,
-      title: 'Beautiful Design',
-      description: 'Every generated site comes with modern, responsive design that looks great on all devices.'
+      title: 'Beautiful Designs',
+      description: 'Every generated site features modern, responsive design that looks stunning on all devices.'
     },
     {
       icon: Rocket,
-      title: 'Lightning Fast',
-      description: 'From idea to live website in seconds. No more waiting weeks for development.'
+      title: 'Deploy Instantly',
+      description: 'From concept to live website in seconds. No complex setup or deployment hassles.'
     }
   ];
 
   return (
-    <section className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <section className="py-24 bg-gradient-to-b from-background to-card/20">
+      <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Why Choose olytiq?
+          <h2 className="text-4xl md:text-6xl font-bold mb-6">
+            <span className="text-foreground">Why Choose </span>
+            <span className="brand-gradient">olytiq?</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Experience the future of web development with our AI-powered platform that transforms your ideas into reality
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-card/50 border-border hover:border-primary/50 transition-all duration-300 group hover:scale-105">
-              <CardContent className="p-6 text-center">
-                <feature.icon className="w-12 h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <h3 className="text-xl font-semibold mb-3 text-foreground">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
+            <Card key={index} className="glow-card hover:border-primary/30 transition-all duration-300 group hover:scale-105 hover:-translate-y-2">
+              <CardContent className="p-8 text-center">
+                <div className="mb-6 inline-flex p-4 rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <feature.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-foreground">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
               </CardContent>
             </Card>
           ))}

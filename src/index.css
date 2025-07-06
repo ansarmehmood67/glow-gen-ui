@@ -9,44 +9,44 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 13% 9%;
-    --foreground: 220 9% 98%;
+    --background: 222 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-    --card: 220 13% 11%;
-    --card-foreground: 220 9% 98%;
+    --card: 222 84% 7%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 220 13% 11%;
-    --popover-foreground: 220 9% 98%;
+    --popover: 222 84% 7%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 262 83% 58%;
-    --primary-foreground: 220 9% 98%;
+    --primary: 271 91% 65%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 220 13% 15%;
-    --secondary-foreground: 220 9% 98%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 220 13% 15%;
-    --muted-foreground: 220 9% 65%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 290 84% 60%;
-    --accent-foreground: 220 13% 9%;
+    --accent: 142 76% 36%;
+    --accent-foreground: 222 84% 4.9%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 220 9% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 220 13% 18%;
-    --input: 220 13% 18%;
-    --ring: 262 83% 58%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 271 91% 65%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 220 13% 9%;
-    --sidebar-foreground: 220 9% 98%;
-    --sidebar-primary: 262 83% 58%;
-    --sidebar-primary-foreground: 220 9% 98%;
-    --sidebar-accent: 220 13% 15%;
-    --sidebar-accent-foreground: 220 9% 98%;
-    --sidebar-border: 220 13% 18%;
-    --sidebar-ring: 262 83% 58%;
+    --sidebar-background: 222 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 271 91% 65%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 217 32% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 32% 17%;
+    --sidebar-ring: 271 91% 65%;
   }
 }
 
@@ -57,98 +57,61 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-sans;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   }
 }
 
 @layer components {
-  .glow {
-    box-shadow: 0 0 20px rgba(139, 69, 255, 0.3);
+  .typewriter {
+    display: inline-block;
+    border-right: 2px solid hsl(var(--primary));
+    animation: blink 1s infinite;
   }
   
-  .glow-intense {
-    box-shadow: 0 0 40px rgba(139, 69, 255, 0.5);
-  }
-  
-  .text-glow {
-    text-shadow: 0 0 20px rgba(139, 69, 255, 0.5);
-  }
-  
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-  
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+  .brand-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .animate-fade-in {
-    animation: fade-in 1s ease-out;
+  .glow-card {
+    background: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(217 32% 12%) 100%);
+    border: 1px solid hsl(217 32% 20%);
+    box-shadow: 0 8px 32px rgba(139, 69, 255, 0.12);
   }
 
-  .animate-slide-up {
-    animation: slide-up 0.8s ease-out;
+  .btn-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(271 91% 70%) 100%);
+    box-shadow: 0 4px 16px rgba(139, 69, 255, 0.3);
+    transition: all 0.3s ease;
   }
 
-  .animate-text-change {
-    animation: text-change 0.5s ease-in-out;
+  .btn-primary:hover {
+    box-shadow: 0 6px 24px rgba(139, 69, 255, 0.4);
+    transform: translateY(-1px);
   }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-20px) rotate(1deg); }
-  50% { transform: translateY(-10px) rotate(0deg); }
-  75% { transform: translateY(-15px) rotate(-1deg); }
+@keyframes blink {
+  0%, 50% { border-color: hsl(var(--primary)); }
+  51%, 100% { border-color: transparent; }
 }
 
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 20px rgba(139, 69, 255, 0.3);
-  }
-  50% { 
-    box-shadow: 0 0 40px rgba(139, 69, 255, 0.6);
-  }
+@keyframes typeIn {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
-@keyframes fade-in {
-  0% { 
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% { 
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes typeOut {
+  from { width: 100%; }
+  to { width: 0; }
 }
 
-@keyframes slide-up {
-  0% { 
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% { 
-    opacity: 1;
-    transform: translateY(0);
-  }
+.animate-type-in {
+  animation: typeIn 1s steps(20) forwards;
 }
 
-@keyframes text-change {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@keyframes gradient-shift {
-  0%, 100% { 
-    background-position: 0% 50%; 
-  }
-  50% { 
-    background-position: 100% 50%; 
-  }
-}
-
-.gradient-animation {
-  background: linear-gradient(-45deg, #8b45ff, #06b6d4, #10b981, #f59e0b);
-  background-size: 400% 400%;
-  animation: gradient-shift 3s ease infinite;
+.animate-type-out {
+  animation: typeOut 0.5s steps(10) forwards;
 }
