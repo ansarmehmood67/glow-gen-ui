@@ -39,9 +39,9 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
 
       return () => clearInterval(typeInInterval);
     } else {
-      let charIndex = currentWord.length;
+      let charIndex = changingWords[currentWordIndex].length;
       const typeOutInterval = setInterval(() => {
-        setDisplayText(currentWord.slice(0, charIndex - 1));
+        setDisplayText(changingWords[currentWordIndex].slice(0, charIndex - 1));
         charIndex--;
 
         if (charIndex <= 0) {
@@ -53,7 +53,7 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
 
       return () => clearInterval(typeOutInterval);
     }
-  }, [currentWordIndex, isTyping, changingWords]);
+  }, [currentWordIndex, isTyping]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,24 +88,14 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
           </p>
         </div>
 
-        {/* Input form with animated heading inside prompt */}
+        {/* Prompt Form */}
         <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
           <div className="premium-card rounded-3xl p-8 backdrop-blur-sm">
-
-            {/* Animated prompt helper text */}
-            <div className="text-xl md:text-2xl text-muted-foreground font-light mb-6 text-left">
-              Ask Olytiq to create{' '}
-              <span className="text-primary font-medium">
-                {displayText}
-                <span className="typewriter"></span>
-              </span>
-            </div>
-
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Start typing your idea here..."
+              placeholder={`Ask Olytiq to create ${displayText}`}
               className="w-full bg-transparent border-none text-foreground placeholder:text-muted-foreground text-xl resize-none focus:ring-0 focus:outline-none min-h-[80px] leading-relaxed"
               disabled={isLoading}
             />
