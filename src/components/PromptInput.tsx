@@ -36,12 +36,11 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
           setTimeout(() => setIsTyping(false), 2000);
         }
       }, 80);
-
       return () => clearInterval(typeInInterval);
     } else {
-      let charIndex = changingWords[currentWordIndex].length;
+      let charIndex = currentWord.length;
       const typeOutInterval = setInterval(() => {
-        setDisplayText(changingWords[currentWordIndex].slice(0, charIndex - 1));
+        setDisplayText(currentWord.slice(0, charIndex - 1));
         charIndex--;
 
         if (charIndex <= 0) {
@@ -50,7 +49,6 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
           setIsTyping(true);
         }
       }, 60);
-
       return () => clearInterval(typeOutInterval);
     }
   }, [currentWordIndex, isTyping]);
@@ -70,63 +68,46 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-20">
-      <div className="w-full max-w-4xl mx-auto text-center space-y-12">
-        {/* Main heading */}
+    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-4xl mx-auto text-center space-y-8">
+        {/* Hero heading */}
         <div className="space-y-4">
-          <h1 className="text-6xl md:text-8xl font-bold">
+          <h1 className="text-5xl md:text-6xl font-bold">
             <span className="text-foreground">Make it. Mean it. </span>
             <span className="premium-gradient flex items-center justify-center gap-4">
-              <Zap className="w-16 h-16 md:w-20 md:h-20 text-primary animate-float" />
+              <Zap className="w-10 h-10 md:w-12 md:h-12 text-primary animate-float" />
               Olytiq.
             </span>
           </h1>
-
-          {/* Subheading */}
-          <p className="text-xl md:text-2xl text-muted-foreground">
-            Describe your vision and watch it come to life...
+          <p className="text-muted-foreground text-lg">
+            Describe your vision and watch it come to life…
           </p>
         </div>
 
-        {/* Prompt Form */}
-        <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
-          <div className="premium-card rounded-3xl p-8 backdrop-blur-sm">
+        {/* Prompt area */}
+        <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
+          <div className="premium-card rounded-3xl p-6 backdrop-blur-sm">
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={`Ask Olytiq to create ${displayText}`}
-              className="w-full bg-transparent border-none text-foreground placeholder:text-muted-foreground text-xl resize-none focus:ring-0 focus:outline-none min-h-[80px] leading-relaxed"
+              className="w-full bg-transparent border-none text-foreground placeholder:text-muted-foreground text-lg resize-none focus:ring-0 focus:outline-none min-h-[80px] leading-relaxed"
               disabled={isLoading}
             />
 
-            {/* Bottom toolbar */}
-            <div className="flex items-center justify-between mt-6 pt-6 border-t border-border">
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
               <div className="flex items-center space-x-6">
-                <button
-                  type="button"
-                  className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:scale-105"
-                  disabled={isLoading}
-                >
-                  <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center hover:bg-muted/80">
+                <button type="button" disabled className="flex items-center text-muted-foreground space-x-2">
+                  <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
                     <span className="text-sm font-bold">+</span>
                   </div>
                 </button>
-
-                <button
-                  type="button"
-                  className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-all duration-200"
-                  disabled={isLoading}
-                >
+                <button type="button" disabled className="flex items-center space-x-2 text-muted-foreground">
                   <Paperclip className="w-5 h-5" />
                   <span className="text-sm font-medium">Attach</span>
                 </button>
-
-                <button
-                  type="button"
-                  className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-all duration-200"
-                  disabled={isLoading}
-                >
+                <button type="button" disabled className="flex items-center space-x-2 text-muted-foreground">
                   <Globe className="w-5 h-5" />
                   <span className="text-sm font-medium">Public</span>
                 </button>
@@ -136,12 +117,12 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
                 type="submit"
                 disabled={!prompt.trim() || isLoading}
                 size="icon"
-                className="btn-primary text-primary-foreground rounded-2xl w-12 h-12 border-0"
+                className="btn-primary text-primary-foreground rounded-2xl w-10 h-10 border-0"
               >
                 {isLoading ? (
                   <div className="animate-spin w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"></div>
                 ) : (
-                  <ArrowUp className="w-6 h-6" />
+                  <ArrowUp className="w-5 h-5" />
                 )}
               </Button>
             </div>
