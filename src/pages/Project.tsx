@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Menu, Home, Plus, CreditCard, HelpCircle } from 'lucide-react';
@@ -18,33 +19,62 @@ const Project = () => {
   const navigate = useNavigate();
   const [htmlContent, setHtmlContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingProject, setIsLoadingProject] = useState(true);
   const [chatHistory, setChatHistory] = useState<Array<{ role: 'user' | 'assistant', content: string }>>([]);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Load project data based on projectId
-    // For now, we'll check if there's stored HTML content
-    const storedHtml = sessionStorage.getItem(`project-${projectId}`);
-    if (storedHtml) {
-      setHtmlContent(storedHtml);
-    }
-  }, [projectId]);
+    // Load project data from backend
+    const loadProject = async () => {
+      if (!projectId) return;
 
-  const handleChatSubmit = async (prompt: string) => {
+      try {
+        console.log('Loading project:', projectId);
+        const response = await fetch(`https://84c8-2402-ad80-13d-2a53-bc68-bc3b-b29b-f1e6.ngrok-free.app/project/${projectId}`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Project data loaded:', data);
+
+        if (data.html) {
+          setHtmlContent(data.html);
+          sessionStorage.setItem(`project-${projectId}`, data.html);
+        }
+      } catch (error) {
+        console.error('Error loading project:', error);
+        toast({
+          title: "Error Loading Project",
+          description: "Could not load the project. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoadingProject(false);
+      }
+    };
+
+    loadProject();
+  }, [projectId, toast]);
+
+  const handleChatSubmit = async (instruction: string) => {
+    if (!projectId) return;
+
     setIsLoading(true);
-    setChatHistory(prev => [...prev, { role: 'user', content: prompt }]);
+    setChatHistory(prev => [...prev, { role: 'user', content: instruction }]);
 
     try {
-      console.log('Sending request to backend with prompt:', prompt);
+      console.log('Sending update request with instruction:', instruction);
       
-      const response = await fetch('https://67cf-223-123-11-240.ngrok-free.app/generate', {
+      const response = await fetch('https://84c8-2402-ad80-13d-2a53-bc68-bc3b-b29b-f1e6.ngrok-free.app/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt: prompt,
-          existingHtml: htmlContent // Send existing HTML for modifications
+          id: projectId,
+          instruction: instruction
         })
       });
 
@@ -59,7 +89,6 @@ const Project = () => {
 
       if (data.html) {
         setHtmlContent(data.html);
-        sessionStorage.setItem(`project-${projectId}`, data.html);
         setChatHistory(prev => [...prev, { role: 'assistant', content: 'Website updated successfully!' }]);
         toast({
           title: "Website Updated! 🎉",
@@ -80,6 +109,17 @@ const Project = () => {
       setIsLoading(false);
     }
   };
+
+  if (isLoadingProject) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
+          <p className="text-muted-foreground">Loading project...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen flex bg-background overflow-hidden relative">
