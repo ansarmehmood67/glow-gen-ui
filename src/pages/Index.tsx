@@ -4,6 +4,8 @@ import Navbar from '@/components/Navbar';
 import PromptInput from '@/components/PromptInput';
 import LoadingAnimation from '@/components/LoadingAnimation';
 import WebsitePreview from '@/components/WebsitePreview';
+import PlatformInfo from '@/components/PlatformInfo';
+import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
@@ -67,13 +69,16 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative bg-background">
       <Navbar />
       
       {/* Main content */}
       <div className="relative">
         {!isLoading && !generatedHtml && (
-          <PromptInput onGenerate={handleGenerate} isLoading={isLoading} />
+          <>
+            <PromptInput onGenerate={handleGenerate} isLoading={isLoading} />
+            <PlatformInfo />
+          </>
         )}
         
         {isLoading && (
@@ -91,6 +96,8 @@ const Index = () => {
           </div>
         )}
       </div>
+
+      {!isLoading && !generatedHtml && <Footer />}
     </div>
   );
 };

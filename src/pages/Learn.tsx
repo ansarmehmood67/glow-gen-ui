@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { BookOpen, Video, FileText, Users } from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 const Learn = () => {
   const resources = [
@@ -38,12 +39,12 @@ const Learn = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-purple-950/20">
+    <div className="min-h-screen bg-background">
       <Navbar />
       
       <div className="container mx-auto px-4 pt-24 pb-12">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Learn & Master
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -84,7 +85,7 @@ const Learn = () => {
                 Join our community of creators and get help from our team and other users
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button className="bg-gradient-to-r from-purple-600 to-cyan-600">
+                <Button className="bg-gradient-to-r from-primary to-accent">
                   Join Discord Community
                 </Button>
                 <Button variant="outline">
@@ -95,6 +96,8 @@ const Learn = () => {
           </Card>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

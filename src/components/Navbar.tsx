@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Sparkles } from 'lucide-react';
+import { Menu, X, Zap } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,9 +23,9 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 text-xl font-bold">
-            <Sparkles className="w-6 h-6 text-primary animate-pulse" />
-            <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-              AI WebGen
+            <Zap className="w-6 h-6 text-primary animate-pulse" />
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              olytiq
             </span>
           </Link>
 
@@ -52,7 +52,7 @@ const Navbar = () => {
               </Button>
             </Link>
             <Link to="/signup">
-              <Button size="sm" className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700">
+              <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80">
                 Get Started
               </Button>
             </Link>
@@ -89,7 +89,7 @@ const Navbar = () => {
                 </Button>
               </Link>
               <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
-                <Button size="sm" className="w-full bg-gradient-to-r from-purple-600 to-cyan-600">
+                <Button size="sm" className="w-full bg-gradient-to-r from-primary to-accent">
                   Get Started
                 </Button>
               </Link>
