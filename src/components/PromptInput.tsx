@@ -68,16 +68,17 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-32">
+    <div className="min-h-screen flex items-center justify-center px-48">
       <div className="w-full max-w-4xl mx-auto text-center space-y-8">
         {/* Hero heading */}
         <div className="space-y-4">
-          <h1 className="text-5xl md:text-6xl font-bold">
-            <span className="text-foreground">Make it. Mean it. </span>
-            <span className="premium-gradient flex items-center justify-center gap-4">
-              <Zap className="w-10 h-10 md:w-12 md:h-12 text-primary animate-float" />
-              Olytiq.
-            </span>
+          <h1 className="text-5xl md:text-6xl font-bold flex flex-wrap justify-center gap-4 items-center">
+  <span className="text-foreground">Make it. Mean it.</span>
+  <span className="premium-gradient inline-flex items-center gap-2">
+    <Zap className="w-10 h-10 md:w-12 md:h-12 text-primary animate-float" />
+    Olytiq.
+  </span>
+</h1>
           </h1>
           <p className="text-muted-foreground text-lg">
             Describe your vision and watch it come to life…
