@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Menu, Home, Plus, CreditCard, HelpCircle } from 'lucide-react';
@@ -18,48 +19,97 @@ const Project = () => {
   const navigate = useNavigate();
   const [htmlContent, setHtmlContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [chatHistory, setChatHistory] = useState<Array<{ role: 'user' | 'assistant', content: string }>>([]);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Load project data based on projectId
-    // For now, we'll check if there's stored HTML content
-    const storedHtml = sessionStorage.getItem(`project-${projectId}`);
-    if (storedHtml) {
-      setHtmlContent(storedHtml);
+    if (!projectId) {
+      navigate('/');
+      return;
     }
-  }, [projectId]);
 
-  const handleChatSubmit = async (prompt: string) => {
+    // Load project data from backend
+    const loadProject = async () => {
+      try {
+        console.log('Loading project:', projectId);
+        
+        const response = await fetch(`/api/project/${projectId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        console.log('Load project response status:', response.status);
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error('Project not found');
+          }
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Project data loaded:', data);
+
+        if (data.html) {
+          setHtmlContent(data.html);
+        } else {
+          throw new Error('No HTML content received from the server');
+        }
+      } catch (error) {
+        console.error('Error loading project:', error);
+        toast({
+          title: "Error Loading Project",
+          description: error instanceof Error ? error.message : "Failed to load project",
+          variant: "destructive",
+        });
+        // Redirect back to home if project can't be loaded
+        navigate('/');
+      } finally {
+        setIsInitialLoading(false);
+      }
+    };
+
+    loadProject();
+  }, [projectId, navigate, toast]);
+
+  const handleChatSubmit = async (instruction: string) => {
+    if (!projectId || !instruction.trim()) {
+      return;
+    }
+
     setIsLoading(true);
-    setChatHistory(prev => [...prev, { role: 'user', content: prompt }]);
+    setChatHistory(prev => [...prev, { role: 'user', content: instruction }]);
 
     try {
-      console.log('Sending request to backend with prompt:', prompt);
+      console.log('Sending update request:', { id: projectId, instruction });
       
-      const response = await fetch('https://67cf-223-123-11-240.ngrok-free.app/generate', {
+      const response = await fetch('/api/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt: prompt,
-          existingHtml: htmlContent // Send existing HTML for modifications
+          id: projectId,
+          instruction: instruction.trim()
         })
       });
 
-      console.log('Response status:', response.status);
+      console.log('Update response status:', response.status);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Update error:', errorText);
+        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
 
       const data = await response.json();
-      console.log('Response data:', data);
+      console.log('Update response data:', data);
 
       if (data.html) {
         setHtmlContent(data.html);
-        sessionStorage.setItem(`project-${projectId}`, data.html);
         setChatHistory(prev => [...prev, { role: 'assistant', content: 'Website updated successfully!' }]);
         toast({
           title: "Website Updated! 🎉",
@@ -70,16 +120,33 @@ const Project = () => {
       }
     } catch (error) {
       console.error('Error updating website:', error);
-      setChatHistory(prev => [...prev, { role: 'assistant', content: 'Sorry, there was an error processing your request.' }]);
+      
+      let errorMessage = 'Sorry, there was an error processing your request.';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
+      setChatHistory(prev => [...prev, { role: 'assistant', content: errorMessage }]);
       toast({
         title: "Update Failed",
-        description: "There was an error updating your website. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (isInitialLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading project...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen flex bg-background overflow-hidden relative">

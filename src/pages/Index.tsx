@@ -17,56 +17,69 @@ const Index = () => {
   const navigate = useNavigate();
 
   const handleGenerate = async (prompt: string) => {
+    if (!prompt.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a prompt",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
+    console.log('Starting generation with prompt:', prompt);
 
     try {
-      console.log('Sending request to backend with prompt:', prompt);
-      
-      const response = await fetch('https://923d-223-123-6-211.ngrok-free.app/generate', {
+      // Make sure to use the correct backend URL - you may need to update this
+      const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt: prompt
+          prompt: prompt.trim()
         })
       });
 
       console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
 
       const data = await response.json();
       console.log('Response data:', data);
 
-      if (data.html) {
-        // Generate a unique project ID
-        const projectId = 'project_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        
-        // Store the HTML content temporarily
-        sessionStorage.setItem(`project-${projectId}`, data.html);
-        
+      if (data.id) {
         toast({
           title: "Website Generated Successfully! 🎉",
           description: "Redirecting to your project editor...",
         });
 
-        // Redirect to the project page
+        // Redirect to the project page with the returned ID
         setTimeout(() => {
-          navigate(`/project/${projectId}`);
+          navigate(`/project/${data.id}`);
         }, 1000);
       } else {
-        throw new Error('No HTML content received from the server');
+        throw new Error('No project ID received from the server');
       }
     } catch (error) {
       console.error('Error generating website:', error);
+      
+      let errorMessage = "There was an error generating your website. Please try again.";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Generation Failed",
-        description: "There was an error generating your website. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
+    } finally {
       setIsLoading(false);
     }
   };
