@@ -30,11 +30,11 @@ const Index = () => {
     console.log('Starting generation with prompt:', prompt);
 
     try {
-      // Make sure to use the correct backend URL - you may need to update this
-      const response = await fetch('/api/generate', {
+      const response = await fetch('https://6f055c632cc9.ngrok-free.app/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true',
         },
         body: JSON.stringify({
           prompt: prompt.trim()
