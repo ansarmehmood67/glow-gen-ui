@@ -26,7 +26,7 @@ const Index = () => {
     console.log('Starting generation with prompt:', prompt);
 
     try {
-      const response = await fetch(https://25dd352f4d0c.ngrok-free.app/generate', {
+      const response = await fetch('https://25dd352f4d0c.ngrok-free.app/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
