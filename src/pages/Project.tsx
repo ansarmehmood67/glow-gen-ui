@@ -152,65 +152,100 @@ const Project = () => {
 
   return (
     <div className="h-screen flex bg-background overflow-hidden relative">
-      {/* Hamburger Menu */}
-      <div className="absolute top-4 left-4 z-50">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="bg-background/90 backdrop-blur-sm border-border/50">
-              <Menu className="h-4 w-4" />
+      {/* Premium Header Bar */}
+      <div className="absolute top-0 left-0 right-0 z-50 h-14 glass-card border-b border-border/50">
+        <div className="flex items-center justify-between h-full px-6">
+          {/* Left: Menu & Project Info */}
+          <div className="flex items-center space-x-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="interactive-element">
+                  <Menu className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-64 glass-card border-border/50">
+                <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer interactive-element">
+                  <Home className="mr-3 h-4 w-4" />
+                  <span>Dashboard</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer interactive-element">
+                  <Plus className="mr-3 h-4 w-4" />
+                  <span>New Project</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  onClick={() => {
+                    toast({
+                      title: "Credits Available",
+                      description: "25 credits remaining in your account",
+                    });
+                  }}
+                  className="cursor-pointer interactive-element"
+                >
+                  <CreditCard className="mr-3 h-4 w-4" />
+                  <span>Credits (25)</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => {
+                    toast({
+                      title: "Support Center",
+                      description: "Access documentation and live chat support",
+                    });
+                  }}
+                  className="cursor-pointer interactive-element"
+                >
+                  <HelpCircle className="mr-3 h-4 w-4" />
+                  <span>Support</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse-glow"></div>
+              <span className="text-sm font-medium text-foreground">Project {projectId}</span>
+            </div>
+          </div>
+
+          {/* Center: Project Status */}
+          <div className="text-center">
+            <h1 className="text-lg font-bold premium-gradient">Olytiq Studio</h1>
+          </div>
+
+          {/* Right: Actions */}
+          <div className="flex items-center space-x-3">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="interactive-element border-border/50 hover:border-primary/50"
+            >
+              Export
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-56 bg-background border-border">
-            <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer">
-              <Home className="mr-3 h-4 w-4" />
-              Go to Dashboard
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer">
-              <Plus className="mr-3 h-4 w-4" />
-              Create New Project
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem 
-              onClick={() => {
-                toast({
-                  title: "Credits",
-                  description: "You have 25 credits remaining",
-                });
-              }}
-              className="cursor-pointer"
+            <Button 
+              size="sm" 
+              className="btn-primary text-primary-foreground"
             >
-              <CreditCard className="mr-3 h-4 w-4" />
-              Credits (25 left)
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              onClick={() => {
-                toast({
-                  title: "Help",
-                  description: "Visit our documentation for assistance",
-                });
-              }}
-              className="cursor-pointer"
-            >
-              <HelpCircle className="mr-3 h-4 w-4" />
-              Help
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              Deploy
+            </Button>
+          </div>
+        </div>
       </div>
 
-      {/* Left Side - Chat Area */}
-      <div className="w-1/2 border-r border-border">
-        <ChatArea 
-          onSubmit={handleChatSubmit}
-          isLoading={isLoading}
-          chatHistory={chatHistory}
-          projectId={projectId}
-        />
-      </div>
-      
-      {/* Right Side - Live Preview */}
-      <div className="w-1/2">
-        <LivePreview htmlContent={htmlContent} />
+      {/* Main Content Area */}
+      <div className="flex w-full pt-14">
+        {/* Left Panel - AI Chat Interface */}
+        <div className="w-1/2 border-r border-border/50 glass-card">
+          <ChatArea 
+            onSubmit={handleChatSubmit}
+            isLoading={isLoading}
+            chatHistory={chatHistory}
+            projectId={projectId}
+          />
+        </div>
+        
+        {/* Right Panel - Live Preview */}
+        <div className="w-1/2 glass-card">
+          <LivePreview htmlContent={htmlContent} />
+        </div>
       </div>
     </div>
   );

@@ -23,8 +23,10 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 text-xl font-bold group">
-            <Zap className="w-7 h-7 text-primary group-hover:rotate-12 transition-transform" />
-            <span className="premium-gradient text-2xl">
+            <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Zap className="w-6 h-6 text-primary" />
+            </div>
+            <span className="premium-gradient text-2xl font-black">
               Olytiq
             </span>
           </Link>

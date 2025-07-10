@@ -4,10 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import PromptInput from '@/components/PromptInput';
 import LoadingAnimation from '@/components/LoadingAnimation';
-import RecentDesigns from '@/components/RecentDesigns';
-import CommunitySection from '@/components/CommunitySection';
-import CTASection from '@/components/CTASection';
-import PlatformInfo from '@/components/PlatformInfo';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 
@@ -85,19 +81,22 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative overflow-hidden">
       <Navbar />
       
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 -left-40 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute top-40 -right-40 w-96 h-96 bg-accent/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-20 left-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+      </div>
+
       {/* Main content */}
       <div className="relative">
         {!isLoading && (
-          <>
+          <div className="animate-slide-up-fade">
             <PromptInput onGenerate={handleGenerate} isLoading={isLoading} />
-            <RecentDesigns />
-            <CommunitySection />
-            <CTASection />
-            <PlatformInfo />
-          </>
+          </div>
         )}
         
         {isLoading && (

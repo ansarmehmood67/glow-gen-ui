@@ -45,25 +45,15 @@ const ChatArea = ({ onSubmit, isLoading, chatHistory, projectId }: ChatAreaProps
 
   return (
     <div className="h-full flex flex-col">
-      {/* Header */}
-      <div className="p-4 border-b border-border bg-card/50">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <Zap className="w-6 h-6 text-primary" />
-            <div>
-              <h2 className="text-lg font-semibold premium-gradient">Olytiq Editor</h2>
-              <p className="text-sm text-muted-foreground">Project: {projectId}</p>
-            </div>
+      {/* Premium AI Assistant Header */}
+      <div className="p-6 border-b border-border/50 glass-card">
+        <div className="flex items-center space-x-4">
+          <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+            <Zap className="w-5 h-5 text-primary" />
           </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm">
-              <Download className="w-4 h-4 mr-2" />
-              Export
-            </Button>
-            <Button size="sm" className="btn-primary">
-              <Globe className="w-4 h-4 mr-2" />
-              Publish
-            </Button>
+          <div>
+            <h2 className="text-lg font-bold premium-gradient">AI Assistant</h2>
+            <p className="text-sm text-muted-foreground">Intelligent code generation and modification</p>
           </div>
         </div>
       </div>
@@ -71,10 +61,12 @@ const ChatArea = ({ onSubmit, isLoading, chatHistory, projectId }: ChatAreaProps
       {/* Chat Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {chatHistory.length === 0 ? (
-          <div className="text-center text-muted-foreground py-8">
-            <Zap className="w-12 h-12 mx-auto mb-4 text-primary/50" />
-            <p className="text-lg font-medium">Ready to customize your website!</p>
-            <p className="text-sm">Ask me to make changes, add features, or modify the design.</p>
+          <div className="text-center py-12">
+            <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
+              <Zap className="w-8 h-8 text-primary" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground mb-2">AI-Powered Editor</h3>
+            <p className="text-muted-foreground max-w-sm mx-auto">Describe any changes you want to make and watch your website transform in real-time.</p>
           </div>
         ) : (
           chatHistory.map((message, index) => (

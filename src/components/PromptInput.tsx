@@ -15,11 +15,11 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
   const [isTyping, setIsTyping] = useState(true);
 
   const changingWords = [
-    'a portfolio website',
-    'an ecommerce store',
-    'a startup landing page',
-    'a personal blog',
-    'a SaaS dashboard'
+    'revolutionary AI applications',
+    'next-generation platforms',
+    'intelligent user experiences',
+    'cutting-edge solutions',
+    'premium digital products'
   ];
 
   useEffect(() => {
@@ -68,66 +68,86 @@ const PromptInput = ({ onGenerate, isLoading }: PromptInputProps) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 pt-48">
-      <div className="w-full max-w-4xl mx-auto text-center space-y-8">
-        {/* Hero heading */}
-        <div className="space-y-4">
-          <h1 className="text-5xl md:text-6xl font-bold">
-            <span className="text-foreground">Make it. Mean it. </span>
-            <span className="premium-gradient flex items-center justify-center gap-2">
-              <Zap className="w-10 h-10 md:w-12 md:h-12 text-primary animate-float" />
-              Olytiq.
+    <div className="min-h-screen flex items-center justify-center px-6 pt-32">
+      <div className="w-full max-w-5xl mx-auto text-center space-y-12">
+        {/* Elite Hero Section */}
+        <div className="space-y-8">
+          <div className="space-y-6">
+            <h1 className="text-6xl md:text-8xl font-black tracking-tight">
+              <span className="text-foreground block">Build the</span>
+              <span className="premium-gradient block">Impossible</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Transform ideas into intelligent digital experiences with AI-powered precision
+            </p>
+          </div>
+          
+          {/* Dynamic Typewriter */}
+          <div className="text-lg text-muted-foreground">
+            <span>Create </span>
+            <span className="text-primary font-semibold text-shimmer">
+              {displayText}
             </span>
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            Describe your vision and watch it come to life…
-          </p>
+            <span className="animate-pulse">|</span>
+          </div>
         </div>
 
-        {/* Prompt area */}
-        <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
-          <div className="premium-card rounded-3xl p-6 backdrop-blur-sm">
+        {/* Premium Prompt Interface */}
+        <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
+          <div className="glass-card rounded-3xl p-8 smart-animate">
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={`Ask Olytiq to create ${displayText}`}
-              className="w-full bg-transparent border-none text-foreground placeholder:text-muted-foreground text-lg resize-none focus:ring-0 focus:outline-none min-h-[80px] leading-relaxed"
+              placeholder="Describe your vision in detail..."
+              className="w-full bg-transparent border-none text-foreground placeholder:text-muted-foreground text-xl resize-none focus:ring-0 focus:outline-none min-h-[120px] leading-relaxed font-medium"
               disabled={isLoading}
             />
 
-            <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
-              <div className="flex items-center space-x-6">
-                <button type="button" disabled className="flex items-center text-muted-foreground space-x-2">
-                  <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                    <span className="text-sm font-bold">+</span>
-                  </div>
-                </button>
-                <button type="button" disabled className="flex items-center space-x-2 text-muted-foreground">
-                  <Paperclip className="w-5 h-5" />
-                  <span className="text-sm font-medium">Attach</span>
-                </button>
-                <button type="button" disabled className="flex items-center space-x-2 text-muted-foreground">
-                  <Globe className="w-5 h-5" />
-                  <span className="text-sm font-medium">Public</span>
-                </button>
+            <div className="flex items-center justify-between mt-6 pt-6 border-t border-border/50">
+              <div className="flex items-center space-x-4">
+                <div className="text-sm text-muted-foreground">
+                  AI-powered • Real-time preview • Production-ready
+                </div>
               </div>
 
               <Button
                 type="submit"
                 disabled={!prompt.trim() || isLoading}
-                size="icon"
-                className="btn-primary text-primary-foreground rounded-2xl w-10 h-10 border-0"
+                size="lg"
+                className="btn-primary text-primary-foreground rounded-2xl px-8 py-3 text-lg font-semibold"
               >
                 {isLoading ? (
-                  <div className="animate-spin w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"></div>
+                  <div className="flex items-center space-x-2">
+                    <div className="animate-spin w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"></div>
+                    <span>Creating...</span>
+                  </div>
                 ) : (
-                  <ArrowUp className="w-5 h-5" />
+                  <div className="flex items-center space-x-2">
+                    <Zap className="w-5 h-5" />
+                    <span>Generate</span>
+                  </div>
                 )}
               </Button>
             </div>
           </div>
         </form>
+
+        {/* Trust Indicators */}
+        <div className="flex items-center justify-center space-x-8 text-muted-foreground text-sm">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-primary rounded-full"></div>
+            <span>Enterprise-grade security</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-primary rounded-full"></div>
+            <span>Production-ready code</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-primary rounded-full"></div>
+            <span>Instant deployment</span>
+          </div>
+        </div>
       </div>
     </div>
   );
