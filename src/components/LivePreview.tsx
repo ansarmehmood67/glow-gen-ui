@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Globe, ExternalLink, Smartphone, Monitor, Tablet } from 'lucide-react';
+import { injectTailwindCSS } from '@/lib/utils';
 
 interface LivePreviewProps {
   htmlContent: string;
@@ -21,7 +22,7 @@ const LivePreview = ({ htmlContent }: LivePreviewProps) => {
   const handleOpenInNewTab = () => {
     const newWindow = window.open();
     if (newWindow) {
-      newWindow.document.write(htmlContent);
+      newWindow.document.write(injectTailwindCSS(htmlContent));
       newWindow.document.close();
     }
   };
@@ -93,7 +94,7 @@ const LivePreview = ({ htmlContent }: LivePreviewProps) => {
                 
                 <div className="h-full bg-white">
                   <iframe
-                    srcDoc={htmlContent}
+                    srcDoc={injectTailwindCSS(htmlContent)}
                     className="w-full h-full border-0"
                     sandbox="allow-scripts allow-same-origin"
                     title="Live Website Preview"

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Download, Globe, RefreshCw, ExternalLink } from 'lucide-react';
+import { injectTailwindCSS } from '@/lib/utils';
 
 interface WebsitePreviewProps {
   htmlContent: string;
@@ -10,7 +11,8 @@ interface WebsitePreviewProps {
 
 const WebsitePreview = ({ htmlContent, onRegenerate }: WebsitePreviewProps) => {
   const handleDownload = () => {
-    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const processedHtml = injectTailwindCSS(htmlContent);
+    const blob = new Blob([processedHtml], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -52,7 +54,7 @@ const WebsitePreview = ({ htmlContent, onRegenerate }: WebsitePreviewProps) => {
           
           <div className="relative bg-white">
             <iframe
-              srcDoc={htmlContent}
+              srcDoc={injectTailwindCSS(htmlContent)}
               className="w-full h-96 md:h-[700px] border-0"
               sandbox="allow-scripts allow-same-origin"
               title="Generated Website Preview"
