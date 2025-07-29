@@ -34,7 +34,7 @@ const Project = () => {
       try {
         console.log('Loading project:', projectId);
         
-        const response = await fetch(`https://6f055c632cc9.ngrok-free.app/project/${projectId}`, {
+        const response = await fetch(`https://6d5b7851bdcb.ngrok-free.app/project/${projectId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const Project = () => {
     try {
       console.log('Sending update request:', { id: projectId, instruction });
       
-      const response = await fetch('https://6f055c632cc9.ngrok-free.app/update', {
+      const response = await fetch('https://6d5b7851bdcb.ngrok-free.app/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
