@@ -2,11 +2,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
-import CinematicHero from '@/components/CinematicHero';
-import EnhancedPromptInterface from '@/components/EnhancedPromptInterface';
-import TrustBadges from '@/components/TrustBadges';
-import TechShowcase from '@/components/TechShowcase';
-import LoadingAnimation from '@/components/LoadingAnimation';
+import ProfessionalHero from '@/components/ProfessionalHero';
+import CleanPromptInterface from '@/components/CleanPromptInterface';
+import LoadingScreen from '@/components/LoadingScreen';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 
@@ -84,14 +82,7 @@ const Index = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
-          <LoadingAnimation />
-        </div>
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   return (
@@ -99,16 +90,10 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <CinematicHero />
+      <ProfessionalHero />
       
-      {/* Enhanced Prompt Interface */}
-      <div className="relative -mt-32 pb-16">
-        <EnhancedPromptInterface onGenerate={handleGenerate} isLoading={isLoading} />
-      </div>
-
-      {/* Trust & Technology Sections */}
-      <TrustBadges />
-      <TechShowcase />
+      {/* Prompt Interface */}
+      <CleanPromptInterface onGenerate={handleGenerate} isLoading={isLoading} />
 
       <Footer />
     </div>

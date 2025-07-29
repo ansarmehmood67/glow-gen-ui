@@ -18,27 +18,29 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 text-xl font-bold group">
-            <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Zap className="w-6 h-6 text-primary" />
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Zap className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="premium-gradient text-2xl font-black">
+            <span className="text-gradient-subtle text-xl font-semibold">
               Olytiq
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-sm font-medium transition-all duration-200 hover:text-primary hover:scale-105 ${
-                  isActive(item.href) ? 'text-primary' : 'text-muted-foreground'
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                  isActive(item.href) 
+                    ? 'text-primary bg-accent' 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                 }`}
               >
                 {item.name}
@@ -47,14 +49,14 @@ const Navbar = () => {
           </div>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             <Link to="/login">
-              <Button variant="ghost" size="sm" className="hover:bg-primary/10 hover:text-primary">
-                Login
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                Sign In
               </Button>
             </Link>
             <Link to="/signup">
-              <Button size="sm" className="btn-primary text-primary-foreground border-0">
+              <Button size="sm" className="btn-primary">
                 Get Started
               </Button>
             </Link>

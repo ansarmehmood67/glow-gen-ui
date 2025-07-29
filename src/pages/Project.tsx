@@ -152,23 +152,23 @@ const Project = () => {
 
   return (
     <div className="h-screen flex bg-background overflow-hidden relative">
-      {/* Premium Header Bar */}
-      <div className="absolute top-0 left-0 right-0 z-50 h-14 glass-card border-b border-border/50">
+      {/* Clean Professional Header */}
+      <div className="absolute top-0 left-0 right-0 z-50 h-16 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="flex items-center justify-between h-full px-6">
           {/* Left: Menu & Project Info */}
           <div className="flex items-center space-x-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="interactive-element">
+                <Button variant="ghost" size="sm" className="hover-lift">
                   <Menu className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-64 glass-card border-border/50">
-                <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer interactive-element">
+              <DropdownMenuContent align="start" className="w-64 clean-card">
+                <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer interactive-subtle">
                   <Home className="mr-3 h-4 w-4" />
                   <span>Dashboard</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer interactive-element">
+                <DropdownMenuItem onClick={() => navigate('/')} className="cursor-pointer interactive-subtle">
                   <Plus className="mr-3 h-4 w-4" />
                   <span>New Project</span>
                 </DropdownMenuItem>
@@ -180,7 +180,7 @@ const Project = () => {
                       description: "25 credits remaining in your account",
                     });
                   }}
-                  className="cursor-pointer interactive-element"
+                  className="cursor-pointer interactive-subtle"
                 >
                   <CreditCard className="mr-3 h-4 w-4" />
                   <span>Credits (25)</span>
@@ -192,7 +192,7 @@ const Project = () => {
                       description: "Access documentation and live chat support",
                     });
                   }}
-                  className="cursor-pointer interactive-element"
+                  className="cursor-pointer interactive-subtle"
                 >
                   <HelpCircle className="mr-3 h-4 w-4" />
                   <span>Support</span>
@@ -201,14 +201,14 @@ const Project = () => {
             </DropdownMenu>
             
             <div className="flex items-center space-x-3">
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse-glow"></div>
+              <div className="status-dot status-online" />
               <span className="text-sm font-medium text-foreground">Project {projectId}</span>
             </div>
           </div>
 
-          {/* Center: Project Status */}
+          {/* Center: Branding */}
           <div className="text-center">
-            <h1 className="text-lg font-bold premium-gradient">Olytiq Studio</h1>
+            <h1 className="text-lg font-semibold text-gradient-subtle">Olytiq Studio</h1>
           </div>
 
           {/* Right: Actions */}
@@ -216,13 +216,13 @@ const Project = () => {
             <Button 
               variant="outline" 
               size="sm" 
-              className="interactive-element border-border/50 hover:border-primary/50"
+              className="btn-secondary"
             >
               Export
             </Button>
             <Button 
               size="sm" 
-              className="btn-primary text-primary-foreground"
+              className="btn-primary"
             >
               Deploy
             </Button>
@@ -231,9 +231,9 @@ const Project = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex w-full pt-14">
+      <div className="flex w-full pt-16">
         {/* Left Panel - AI Chat Interface */}
-        <div className="w-1/2 border-r border-border/50 glass-card">
+        <div className="w-1/2 border-r border-border bg-background">
           <ChatArea 
             onSubmit={handleChatSubmit}
             isLoading={isLoading}
@@ -243,7 +243,7 @@ const Project = () => {
         </div>
         
         {/* Right Panel - Live Preview */}
-        <div className="w-1/2 glass-card">
+        <div className="w-1/2 bg-background">
           <LivePreview htmlContent={htmlContent} />
         </div>
       </div>

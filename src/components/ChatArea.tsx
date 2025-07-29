@@ -45,15 +45,18 @@ const ChatArea = ({ onSubmit, isLoading, chatHistory, projectId }: ChatAreaProps
 
   return (
     <div className="h-full flex flex-col">
-      {/* Premium AI Assistant Header */}
-      <div className="p-6 border-b border-border/50 glass-card">
-        <div className="flex items-center space-x-4">
-          <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
-            <Zap className="w-5 h-5 text-primary" />
+      {/* Clean Professional Header */}
+      <div className="p-6 border-b border-border">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+            <Zap className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
-            <h2 className="text-lg font-bold premium-gradient">AI Assistant</h2>
-            <p className="text-sm text-muted-foreground">Intelligent code generation and modification</p>
+            <h2 className="font-semibold text-foreground">AI Assistant</h2>
+            <p className="text-sm text-muted-foreground">Ready to help you build</p>
+          </div>
+          <div className="ml-auto">
+            <div className="status-dot status-online" />
           </div>
         </div>
       </div>
@@ -95,35 +98,33 @@ const ChatArea = ({ onSubmit, isLoading, chatHistory, projectId }: ChatAreaProps
       </div>
 
       {/* Input Area */}
-      <div className="p-4 border-t border-border bg-card/30">
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <Textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Describe the changes you want to make..."
-            className="min-h-[80px] resize-none bg-background border-border focus:ring-primary"
-            disabled={isLoading}
-          />
-          <div className="flex justify-between items-center">
-            <p className="text-xs text-muted-foreground">
-              Press Enter to send, Shift+Enter for new line
-            </p>
+      <div className="p-6 border-t border-border">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex gap-3">
+            <Textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Describe what you'd like to change..."
+              className="flex-1 min-h-[80px] resize-none border-border focus:border-primary"
+              disabled={isLoading}
+            />
             <Button
               type="submit"
               disabled={!input.trim() || isLoading}
-              size="sm"
-              className="btn-primary"
+              className="self-end btn-primary"
             >
               {isLoading ? (
-                <div className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full"></div>
+                <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
               ) : (
-                <>
-                  <ArrowUp className="w-4 h-4 mr-2" />
-                  Send
-                </>
+                <ArrowUp className="w-5 h-5" />
               )}
             </Button>
+          </div>
+          
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>Press Enter to send, Shift+Enter for new line</span>
+            <span>{input.length}/500</span>
           </div>
         </form>
       </div>
